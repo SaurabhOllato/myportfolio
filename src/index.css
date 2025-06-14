@@ -1,3 +1,27 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+
+.marquee-wrapper {
+  width: 100%;
+  white-space: nowrap;
+}
+
+.marquee-text {
+  display: inline-block;
+  will-change: transform;
+  padding-left: 100%;
+}
+
+.marquee-text span:hover {
+  color: #6366f1; /* Indigo-500 */
+  animation-play-state: paused; /* For CSS-based */
+  transition: color 0.3s ease;
+}
+.font{
+    font-family: 'Space Grotesk';
+font-weight: 700;
+letter-spacing: 0.5px;
+
+}

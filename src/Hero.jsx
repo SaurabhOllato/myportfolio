@@ -1,11 +1,11 @@
 import { useEffect, useRef } from "react";
 import gsap from "gsap";
 import ScrollTrigger from "gsap/ScrollTrigger";
-import Particles from "./Particles.jsx";
+import Particles from "./Projects.jsx";
 gsap.registerPlugin(ScrollTrigger);
 
 const Hero = () => {
-  const heroRef = useRef(null);
+  // const heroRef = useRef(null);
   const textLine1Ref = useRef(null);
   const textLine2Ref = useRef(null);
   const textLine3Ref = useRef(null);
@@ -15,103 +15,25 @@ const Hero = () => {
   const logoRef = useRef(null);
   const cvButtonRef = useRef(null);
 
+
+
+   const heroRef = useRef(null);
+
   useEffect(() => {
-    // Master timeline for coordinated animations
-    const tl = gsap.timeline({ defaults: { ease: "power3.out" } });
-
-    // Logo animation
-    tl.from(logoRef.current, {
-      opacity: 0,
-      y: -20,
-      duration: 0.8,
+    const tl = gsap.timeline({
+      scrollTrigger: {
+        trigger: heroRef.current,
+        start: "top center",
+        end: "bottom top",
+        scrub: 1.5,
+      },
     });
 
-    // Navigation items animation
-    tl.from(navItemsRef.current, {
-      opacity: 0,
-      y: -20,
-      duration: 0.6,
-      stagger: 0.1,
-    }, "-=0.5");
-
-    // CV button animation
-    tl.from(cvButtonRef.current, {
-      opacity: 0,
-      y: -20,
-      duration: 0.6,
-    }, "-=0.4");
-
-    // Text animations
-    tl.from(textLine1Ref.current, {
-      opacity: 0,
-      y: 30,
-      duration: 0.8,
-    })
-    .from(textLine2Ref.current, {
-      opacity: 0,
-      y: 40,
-      duration: 1,
-    }, "-=0.3")
-    .from(underlineRef.current, {
-      scaleX: 0,
-      duration: 1.2,
-      ease: "elastic.out(1, 0.5)",
-    }, "-=0.8")
-    .from(textLine3Ref.current, {
-      opacity: 0,
-      y: 20,
-      duration: 0.8,
-    }, "-=0.6");
-
-    // Floating ball animation
-    gsap.to(ballRef.current, {
-      x: "random(-100, 100, 5)",
-      y: "random(-100, 100, 5)",
-      duration: 3,
-      repeat: -1,
-      repeatRefresh: true,
-      ease: "sine.inOut"
-    });
-
-    // Scroll-triggered animations
-    gsap.fromTo(
-      heroRef.current,
-      { opacity: 0, y: 100 },
-      {
-        opacity: 1,
-        y: 0,
-        duration: 1.2,
-        scrollTrigger: {
-          trigger: heroRef.current,
-          start: "top 80%",
-          toggleActions: "play none none none",
-        },
-      }
+    tl.fromTo(
+      ".hero-line",
+      { y: 100, opacity: 0 },
+      { y: 0, opacity: 1, stagger: 0.15, duration: 1, ease: "power2.out" }
     );
-
-    // Mouse move parallax effect
-    heroRef.current.addEventListener("mousemove", (e) => {
-      const x = e.clientX / window.innerWidth;
-      const y = e.clientY / window.innerHeight;
-      
-      gsap.to(textLine2Ref.current, {
-        x: x * 20 - 10,
-        y: y * 20 - 10,
-        duration: 1.5,
-        ease: "power1.out"
-      });
-      
-      gsap.to(ballRef.current, {
-        x: e.clientX,
-        y: e.clientY,
-        duration: 0.5,
-        ease: "power2.out"
-      });
-    });
-
-    return () => {
-      heroRef.current?.removeEventListener("mousemove");
-    };
   }, []);
 
   return (
@@ -126,18 +48,13 @@ const Hero = () => {
       <div className="relative z-10 flex flex-col sm:flex-row h-auto sm:h-20 w-full">
         {/* Left Column: Logo */}
         <div className="w-full sm:w-1/3 text-white flex items-center justify-between px-6 py-3 sm:py-0 sm:justify-end">
-          {/* <img 
-            ref={logoRef}
-            src="assets/LOGO.png" 
-            alt="Logo" 
-            className="lg:w-20 lg:h-20 w-10 h-10 transition-all duration-300 hover:scale-110" 
-          /> */}
-          <h1>portfolio</h1>
+       
+          <h1 className="font">SaurabhChaurasia</h1>
         </div>
 
         {/* Right Column: Nav + CV Button */}
-        <div className="w-full sm:w-2/3 hidden lg:flex flex-row items-center justify-between px-6 gap-4 py-3 sm:py-0">
-          <nav>
+        <div className="w-full sm:w-1/2 hidden lg:flex flex-row items-center justify-end px-6 gap-4 py-3 sm:py-0">
+          {/* <nav>
             <ul className="flex flex-wrap justify-center gap-4 sm:gap-6 font-medium text-white">
               {['Home', 'About', 'Skills', 'Projects', 'Contact'].map((item, index) => (
                 <li key={item}>
@@ -152,63 +69,53 @@ const Hero = () => {
                 </li>
               ))}
             </ul>
-          </nav>
+          </nav> */}
           <button
             ref={cvButtonRef}
-            className="bg-gradient-to-r from-purple-600 to-indigo-600 text-white px-6 py-2 rounded-full hover:from-purple-700 hover:to-indigo-700 transition-all duration-300 shadow-lg hover:shadow-purple-500/20"
+            className="bg-[#] text-white px-6 py-2 rounded-full hover:from-purple-700 hover:to-indigo-700 transition-all duration-300 shadow-lg hover:shadow-purple-500/20"
           >
-            Download CV
+            Resume
           </button>
         </div>
       </div>
 
       {/* Hero Content */}
       <div className="relative z-10 flex flex-col lg:flex-row items-center justify-center min-h-[calc(100vh-5rem)] px-6 lg:px-20 pt-10">
-        <div className="text-center w-full max-w-3xl">
+        <div className="text-center w-full max-w-3xl mb-8 space-y-4">
           {/* Headline Part 1 */}
-          <h1
+          {/* <h1
             ref={textLine1Ref}
-            className="text-4xl lg:text-5xl xl:text-6xl font-bold text-white mb-2 tracking-tight"
+            className="text-4xl lg:text-5xl xl:text-6xl font-bold text-[#A6A6A6] mb-2 tracking-tight"
           >
             Hello, I'm a
-          </h1>
+          </h1> */}
+            <h1 className="hero-line text-[64px] sm:text-[100px] font-bold leading-none  text-[#A6A6A6] tracking-tight">
+          FRONT <span className="inline-block">—</span> END
+        </h1>
+        <h1 className="hero-line text-[64px] sm:text-[100px] font-bold leading-none  text-[#A6A6A6] tracking-tight">
+          DEVELOPER
+        </h1>
 
           {/* Headline Part 2 */}
-          <div className="relative inline-block">
-            <h2
-              ref={textLine2Ref}
-              className="text-4xl lg:text-5xl xl:text-6xl font-extrabold bg-clip-text text-transparent bg-gradient-to-r from-purple-400 via-gray-100 to-indigo-300 tracking-tight"
-            >
-              Web Dev<span className="text-white">e</span>loper
-            </h2>
-
-            {/* Animated underline */}
-            <div className="absolute -bottom-2 left-1/2 transform -translate-x-1/2 h-1.5 w-full overflow-hidden">
-              <span
-                ref={underlineRef}
-                className="absolute bottom-0 left-0 h-full w-full bg-gradient-to-r from-purple-500 to-indigo-600 rounded-full transform origin-left"
-              ></span>
-            </div>
-          </div>
+         
 
           {/* Subheading */}
-          <p
-            ref={textLine3Ref}
-            className="mt-6 text-gray-400 text-lg lg:text-xl font-medium leading-relaxed max-w-2xl mx-auto"
-          >
-            Crafting digital experiences with
-            <span className="text-purple-400 font-semibold mx-1">clean code</span> &
-            <span className="text-purple-400 font-semibold mx-1">thoughtful design</span>
-          </p>
+        <div className="hero-line text-sm md:text-base max-w-md text-gray-400">
+        {/* <p>
+          I am a developer focused on creating bold, responsive, and elegant
+          digital experiences. I work with brands and agencies to build unique
+          web interfaces.
+        </p> */}
+      </div>
 
           {/* CTA Buttons */}
           <div className="mt-10 flex justify-center gap-4">
-            <button className="bg-gradient-to-r from-purple-600 to-indigo-600 text-white px-6 py-3 rounded-lg hover:from-purple-700 hover:to-indigo-700 transition-all duration-300 shadow-lg hover:shadow-purple-500/20">
+            {/* <button className="bg-gradient-to-r from-purple-600 to-indigo-600 text-white px-6 py-3 rounded-lg hover:from-purple-700 hover:to-indigo-700 transition-all duration-300 shadow-lg hover:shadow-purple-500/20">
               View Projects
             </button>
             <button className="border border-purple-400 text-purple-400 px-6 py-3 rounded-lg hover:bg-purple-400/10 transition-all duration-300">
               Contact Me
-            </button>
+            </button> */}
           </div>
         </div>
       </div>
@@ -227,8 +134,8 @@ const Hero = () => {
 
       {/* Scroll indicator */}
       <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 z-10">
-        <div className="animate-bounce w-6 h-10 border-2 border-purple-400 rounded-full flex justify-center">
-          <div className="w-1 h-2 bg-purple-400 rounded-full mt-2"></div>
+        <div className="animate-bounce w-6 h-10 border-2 border-white rounded-full flex justify-center">
+          <div className="w-1 h-2 bg-white rounded-full mt-2"></div>
         </div>
       </div>
     </section>
