@@ -176,55 +176,58 @@
 import React, { useEffect, useRef } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { useScroll, useSpring, useTransform, motion } from "framer-motion";
+import { FiExternalLink, FiGithub } from "react-icons/fi";
 
 gsap.registerPlugin(ScrollTrigger);
 
 export default function Portfolio() {
+  const ref = useRef(null);
+  const timelineRef = useRef(null);
+
+  // Smooth scroll progress with spring physics
+  const { scrollYProgress } = useScroll({
+    target: ref,
+    offset: ["start end", "end start"],
+  });
+  const smoothScroll = useSpring(scrollYProgress, {
+    damping: 20,
+    stiffness: 100,
+  });
+
+  const { scrollYProgress: timelineScroll } = useScroll({
+    target: timelineRef,
+    offset: ["start end", "end start"],
+  });
+  const smoothTimelineScroll = useSpring(timelineScroll, {
+    damping: 20,
+    stiffness: 100,
+  });
+
+  // Animations for about section
+  const yHeading = useTransform(smoothScroll, [0, 1], [100, 0]);
+  const yParagraph = useTransform(smoothScroll, [0, 1], [150, 0]);
+  const opacity = useTransform(smoothScroll, [0.2, 0.4, 0.8], [0, 1, 1]);
+  const scale = useTransform(smoothScroll, [0, 0.5], [0.95, 1]);
   const sectionRef = useRef(null);
   const headingRef = useRef(null);
   const filterButtonsRef = useRef(null);
   const gridRef = useRef(null);
 
   useEffect(() => {
-    // Header animation
-    gsap.from(headingRef.current, {
-      y: 80,
-      opacity: 0,
-      duration: 1.2,
-      ease: "power3.out",
-      scrollTrigger: {
-        trigger: sectionRef.current,
-        start: "top 70%",
-        toggleActions: "play none none none"
-      }
-    });
+    // animation setup...
 
-    // Filter buttons animation
-    gsap.from(filterButtonsRef.current.children, {
-      y: 40,
-      opacity: 0,
-      stagger: 0.08,
-      duration: 0.8,
-      ease: "back.out(1.7)",
-      scrollTrigger: {
-        trigger: filterButtonsRef.current,
-        start: "top 80%",
-        toggleActions: "play none none none"
-      }
-    });
-
-    // Portfolio items animation
     const items = gridRef.current.querySelectorAll(".portfolio-item");
-    
-    items.forEach((item, index) => {
+
+    const cleanupFns = [];
+
+    items.forEach((item) => {
       const img = item.querySelector("img");
       const content = item.querySelector("div[class*='absolute']");
-      
-      // Initial state
+
       gsap.set(img, { scale: 1.1 });
       gsap.set(content, { y: 30, opacity: 0 });
-      
-      // Scroll animation
+
       gsap.to(item, {
         y: 0,
         opacity: 1,
@@ -233,54 +236,77 @@ export default function Portfolio() {
         scrollTrigger: {
           trigger: item,
           start: "top 80%",
-          toggleActions: "play none none none"
-        }
+          toggleActions: "play none none none",
+        },
       });
-      
-      // Hover animation
-      item.addEventListener("mouseenter", () => {
+
+      const handleMouseEnter = () => {
         gsap.to(img, { scale: 1, duration: 0.7, ease: "power2.out" });
-        gsap.to(content, { y: 0, opacity: 1, duration: 0.5, ease: "power2.out" });
-      });
-      
-      item.addEventListener("mouseleave", () => {
+        gsap.to(content, {
+          y: 0,
+          opacity: 1,
+          duration: 0.5,
+          ease: "power2.out",
+        });
+      };
+
+      const handleMouseLeave = () => {
         gsap.to(img, { scale: 1.1, duration: 0.7, ease: "power2.out" });
-        gsap.to(content, { y: 30, opacity: 0, duration: 0.3, ease: "power2.in" });
+        gsap.to(content, {
+          y: 30,
+          opacity: 0,
+          duration: 0.3,
+          ease: "power2.in",
+        });
+      };
+
+      item.addEventListener("mouseenter", handleMouseEnter);
+      item.addEventListener("mouseleave", handleMouseLeave);
+
+      // cleanup
+      cleanupFns.push(() => {
+        item.removeEventListener("mouseenter", handleMouseEnter);
+        item.removeEventListener("mouseleave", handleMouseLeave);
       });
     });
+
+    return () => {
+      cleanupFns.forEach((fn) => fn());
+    };
   }, []);
 
   const handleFilterClick = (e, cat) => {
     const filterButtons = filterButtonsRef.current.children;
     const items = gridRef.current.querySelectorAll(".portfolio-item");
-    
+
     // Animate filter buttons
     gsap.to(filterButtons, {
       color: "#AAAAAA",
       backgroundColor: "transparent",
-      duration: 0.3
+      duration: 0.3,
     });
-    
+
     gsap.to(e.currentTarget, {
       color: "#FFFFFF",
       backgroundColor: "rgba(99, 102, 241, 0.2)",
-      duration: 0.3
+      duration: 0.3,
     });
-    
+
     // Animate grid items
     items.forEach((item) => {
       const category = item.getAttribute("data-category");
       const match = category.includes(cat) || cat === "all";
-      
+
       if (match) {
-        gsap.fromTo(item, 
+        gsap.fromTo(
+          item,
           { opacity: 0, y: 20 },
-          { 
-            opacity: 1, 
-            y: 0, 
-            duration: 0.6, 
+          {
+            opacity: 1,
+            y: 0,
+            duration: 0.6,
             ease: "power2.out",
-            display: "block"
+            display: "block",
           }
         );
       } else {
@@ -292,11 +318,94 @@ export default function Portfolio() {
           display: "none",
           onComplete: () => {
             item.style.display = "none";
-          }
+          },
         });
       }
     });
   };
+
+  const projectCategories = [
+    { id: "all", name: "All Projects" },
+    { id: "web", name: "Web Development" },
+    { id: "uiux", name: "UI/UX Design" },
+    { id: "branding", name: "Branding" },
+    { id: "mobile", name: "Mobile Apps" },
+  ];
+
+  const projectsData = [
+    {
+      id: 1,
+      title: "E-Commerce Platform",
+      subtitle: "Full-stack online store with payment integration",
+      category: "web",
+      img: "https://res.cloudinary.com/dxscy1ixg/image/upload/v1749815459/pexels-carolinefeelgood-3363681_kegpgl.jpg",
+      tags: ["React", "Node.js", "MongoDB", "Stripe"],
+      links: {
+        live: "#",
+        code: "#",
+      },
+    },
+    {
+      id: 2,
+      title: "Dashboard UI Kit",
+      subtitle: "Design system for analytics applications",
+      category: "uiux",
+      img: "https://source.unsplash.com/random/600x600/?dashboard",
+      tags: ["Figma", "Design System", "UI Components"],
+      links: {
+        live: "#",
+        code: "#",
+      },
+    },
+    {
+      id: 3,
+      title: "Corporate Branding",
+      subtitle: "Complete visual identity for tech startup",
+      category: "branding",
+      img: "https://source.unsplash.com/random/600x600/?branding",
+      tags: ["Logo", "Typography", "Color Palette"],
+      links: {
+        live: "#",
+        code: "#",
+      },
+    },
+    {
+      id: 4,
+      title: "Fitness Mobile App",
+      subtitle: "Workout tracking and nutrition planning",
+      category: "mobile",
+      img: "https://source.unsplash.com/random/600x600/?fitness",
+      tags: ["React Native", "Firebase", "Health API"],
+      links: {
+        live: "#",
+        code: "#",
+      },
+    },
+    {
+      id: 5,
+      title: "Portfolio Website",
+      subtitle: "Minimalist designer portfolio",
+      category: "web",
+      img: "https://source.unsplash.com/random/600x600/?portfolio",
+      tags: ["GSAP", "Three.js", "Responsive"],
+      links: {
+        live: "#",
+        code: "#",
+      },
+    },
+    {
+      id: 6,
+      title: "SAAS Product UI",
+      subtitle: "User interface for productivity tool",
+      category: "uiux",
+      img: "https://source.unsplash.com/random/600x600/?saas",
+      tags: ["User Flows", "Wireframes", "Prototyping"],
+      links: {
+        live: "#",
+        code: "#",
+      },
+    },
+  ];
 
   return (
     <section
@@ -305,7 +414,7 @@ export default function Portfolio() {
       className="bg-[#111111] min-h-screen text-[#AAAAAA] py-16 relative overflow-hidden"
     >
       {/* Animated background elements */}
-      <div className="absolute inset-0 overflow-hidden pointer-events-none">
+      {/* <div className="absolute inset-0 overflow-hidden pointer-events-none">
         {[...Array(6)].map((_, i) => (
           <div
             key={i}
@@ -316,131 +425,118 @@ export default function Portfolio() {
               top: `${Math.random() * 100}%`,
               left: `${Math.random() * 100}%`,
               filter: "blur(40px)",
-              transform: `scale(${Math.random() * 2 + 1})`
+              transform: `scale(${Math.random() * 2 + 1})`,
             }}
           />
         ))}
-      </div>
-      
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-        <div className="text-center mb-16" ref={headingRef}>
-          <h2 className="text-5xl md:text-7xl font-bold text-white mb-6">
-            Portfolio
-          </h2>
-          <div className="w-24 h-1 bg-indigo-500 mx-auto mb-6"></div>
-          <p className="text-xl text-gray-400 max-w-3xl mx-auto">
-            A curated collection of my creative work and professional projects
-          </p>
-        </div>
+      </div> */}
 
-        <div 
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+        <motion.div
+          className="text-center mb-16 md:mb-24"
+          style={{
+            y: yHeading,
+            opacity,
+            scale,
+          }}
+        >
+          <h2 className="text-5xl md:text-7xl font-bold text-white mb-6">
+            My <span className="text-indigo-400">Work</span>
+          </h2>
+          <motion.div
+            className="w-24 h-1 bg-indigo-500 mx-auto mb-8"
+            style={{ y: yParagraph }}
+          />
+          <motion.p
+            className="text-lg md:text-xl text-gray-400 max-w-3xl mx-auto"
+            style={{ y: yParagraph }}
+          >
+            Selected projects showcasing my skills in design and development
+          </motion.p>
+        </motion.div>
+
+        <div
           className="flex justify-center gap-3 flex-wrap mb-16"
           ref={filterButtonsRef}
         >
-          {["all", "branding", "logo", "uiux", "web", "design"].map((cat, idx) => (
-            <button
-              key={cat}
-              onClick={(e) => handleFilterClick(e, cat)}
-              className={`filter-btn px-5 py-2.5 rounded-full transition-all duration-300 font-medium text-sm sm:text-base ${
-                idx === 0 ? "text-white bg-indigo-500/20" : "text-[#AAAAAA] hover:text-white hover:bg-indigo-500/10"
-              }`}
-              data-filter={cat}
-            >
-              {cat.charAt(0).toUpperCase() + cat.slice(1)}
-            </button>
-          ))}
+          {["all", "branding", "logo", "uiux", "web", "design"].map(
+            (cat, idx) => (
+              <button
+                key={cat}
+                onClick={(e) => handleFilterClick(e, cat)}
+                className={`filter-btn px-5 py-2.5 rounded-full transition-all duration-300 font-medium text-sm sm:text-base ${
+                  idx === 0
+                    ? "text-white bg-indigo-500/20"
+                    : "text-[#AAAAAA] hover:text-white hover:bg-indigo-500/10"
+                }`}
+                data-filter={cat}
+              >
+                {cat.charAt(0).toUpperCase() + cat.slice(1)}
+              </button>
+            )
+          )}
         </div>
 
         <div
           className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8"
           ref={gridRef}
         >
-          {[
-            {
-              id: 1,
-              title: "Branding Project",
-              subtitle: "Complete brand identity system",
-              category: "branding,design",
-              img: "https://source.unsplash.com/random/600x600/?branding"
-            },
-            {
-              id: 2,
-              title: "Web Application",
-              subtitle: "Responsive SaaS platform",
-              category: "web,uiux",
-              img: "https://source.unsplash.com/random/600x600/?webdesign"
-            },
-            {
-              id: 3,
-              title: "Logo Design",
-              subtitle: "Minimalist brand mark",
-              category: "logo,branding",
-              img: "https://source.unsplash.com/random/600x600/?logo"
-            },
-            {
-              id: 4,
-              title: "UI/UX Design",
-              subtitle: "Mobile app interface",
-              category: "uiux,design",
-              img: "https://source.unsplash.com/random/600x600/?appdesign"
-            },
-            {
-              id: 5,
-              title: "Website Redesign",
-              subtitle: "Corporate website",
-              category: "web,design",
-              img: "https://source.unsplash.com/random/600x600/?website"
-            },
-            {
-              id: 6,
-              title: "Visual Identity",
-              subtitle: "Brand collateral",
-              category: "branding,design",
-              img: "https://source.unsplash.com/random/600x600/?brandidentity"
-            },
-            {
-              id: 7,
-              title: "Dashboard UI",
-              subtitle: "Analytics interface",
-              category: "uiux,web",
-              img: "https://source.unsplash.com/random/600x600/?dashboard"
-            },
-            {
-              id: 8,
-              title: "Packaging Design",
-              subtitle: "Product packaging",
-              category: "design,branding",
-              img: "https://source.unsplash.com/random/600x600/?packaging"
-            },
-            {
-              id: 9,
-              title: "Mobile UI Kit",
-              subtitle: "Design system components",
-              category: "uiux,design",
-              img: "https://source.unsplash.com/random/600x600/?uikit"
-            }
-          ].map((item) => (
+          {projectsData.map((project) => (
             <div
-              key={item.id}
-              className="portfolio-item opacity-0 translate-y-10 group relative overflow-hidden rounded-xl bg-white/5 backdrop-blur-sm border border-white/5 shadow-lg transition-all duration-500 hover:border-indigo-500/30 hover:shadow-indigo-500/10"
-              data-id={item.id}
-              data-category={item.category}
+              key={project.id}
+              className="portfolio-item group relative overflow-hidden rounded-xl bg-gradient-to-b from-white/5 to-white/[0.01] backdrop-blur-sm border border-white/5 shadow-lg transition-all duration-500 hover:border-indigo-500/50 hover:shadow-indigo-500/10"
+              data-category={project.category}
             >
-              <div className="relative h-80 overflow-hidden">
+              <div className="relative h-72 md:h-80 overflow-hidden">
                 <img
-                  src={item.img}
-                  alt={item.title}
-                  className="w-full h-full object-cover transition-all duration-700"
+                  src={project.img}
+                  alt={project.title}
+                  className="w-full h-full object-cover transition-all duration-700 group-hover:scale-105"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex items-end p-6">
+
+                {/* Project tags */}
+                <div className="portfolio-tags absolute top-4 left-4 flex flex-wrap gap-2 opacity-0 translate-y-2 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-500">
+                  {project.tags.map((tag) => (
+                    <span
+                      key={tag}
+                      className="text-xs font-medium px-2.5 py-1 rounded-full bg-indigo-500/10 text-indigo-300 backdrop-blur-sm"
+                    >
+                      {tag}
+                    </span>
+                  ))}
+                </div>
+
+                {/* Project content overlay */}
+                <div className="portfolio-content absolute inset-0 bg-gradient-to-t from-black/90 via-black/60 to-transparent p-6 flex flex-col justify-end opacity-0 translate-y-6 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-500">
                   <div>
-                    <h3 className="text-white text-xl font-bold mb-1">
-                      {item.title}
+                    <h3 className="text-white text-xl font-bold mb-2">
+                      {project.title}
                     </h3>
-                    <p className="text-gray-300 text-sm">{item.subtitle}</p>
-                    <button className="mt-3 text-xs font-medium px-3 py-1.5 rounded-full bg-indigo-500 text-white hover:bg-indigo-600 transition-colors duration-300">
-                      View Project
-                    </button>
+                    <p className="text-gray-300 text-sm mb-4">
+                      {project.subtitle}
+                    </p>
+                    <div className="flex gap-3 flex-wrap">
+                      {project.links.live && (
+                        <a
+                          href={project.links.live}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="inline-flex items-center gap-1 text-sm font-medium px-4 py-2 rounded-full bg-indigo-500 text-white hover:bg-indigo-600 transition-colors duration-300"
+                        >
+                          Live Demo <FiExternalLink className="text-sm" />
+                        </a>
+                      )}
+                      {project.links.code && (
+                        <a
+                          href={project.links.code}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="inline-flex items-center gap-1 text-sm font-medium px-4 py-2 rounded-full bg-white/10 text-white hover:bg-white/20 transition-colors duration-300"
+                        >
+                          Code <FiGithub className="text-sm" />
+                        </a>
+                      )}
+                    </div>
                   </div>
                 </div>
               </div>

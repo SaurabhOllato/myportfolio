@@ -5,7 +5,7 @@ import About from './About'
 import Timeline from './Timeline';
 import Skills from './Skills';
 import Portfolio from './Portfolio';
-import Contact from './assets/Contact';
+import Contact from './Contact';
 import Projects from './Projects';
 
 function App() {

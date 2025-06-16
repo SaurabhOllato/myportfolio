@@ -79,7 +79,7 @@ const About = () => {
         
         <div className="max-w-3xl px-4 relative z-10">
           <motion.h2
-            className="text-6xl md:text-8xl font-bold mb-6 text-white"
+            className="text-6xl md:text-8xl font-bold mb-6 text-[#A6A6A6] "
             style={{ 
               y: yHeading, 
               opacity,
