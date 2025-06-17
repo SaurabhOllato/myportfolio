@@ -214,15 +214,13 @@ export default function Portfolio() {
   // Animations for about section
   const yHeading = useTransform(smoothScroll, [0, 0.4], [80, 0]);
   const opacityHeading = useTransform(smoothScroll, [0.1, 0.4], [0, 1]);
-  const ySkills = useTransform(smoothScroll, [0.2, 0.6], [150, 0]); // Comes after heading
-  const yToolsHeading = useTransform(smoothScroll, [0.4, 0.7], [120, 0]); // Delayed tools heading
-  const yToolsSkiils = useTransform(smoothScroll, [0.5, 0.9], [150, 0]); // Last to animate in
+  const yCategory = useTransform(smoothScroll, [0.2, 0.6], [150, 0]); // Comes after heading
+  const yPortfolio = useTransform(smoothScroll, [0.4, 0.7], [120, 0]); // Delayed tools heading
 
   // const opacity = useTransform(smoothScroll, [0.2, 0.4, 0.8], [0, 1, 1]);
-  const opacitySkills = useTransform(smoothScroll, [0.2, 0.5], [0, 1]);
+  const opacityCategory = useTransform(smoothScroll, [0.2, 0.5], [0, 1]);
+  const opacityPortfolio = useTransform(smoothScroll, [0.2, 0.5], [0, 1]);
 
-  const yParagraph = useTransform(smoothScroll, [0.2, 0.6], [150, 0]);
-  const opacity = useTransform(smoothScroll, [0.2, 0.4, 0.8], [0, 1, 1]);
   const scale = useTransform(smoothScroll, [0, 0.5], [0.95, 1]);
 
   const sectionRef = useRef(null);
@@ -340,13 +338,7 @@ export default function Portfolio() {
     });
   };
 
-  const projectCategories = [
-    { id: "all", name: "All Projects" },
-    { id: "web", name: "Web Development" },
-    { id: "uiux", name: "UI/UX Design" },
-    { id: "branding", name: "Branding" },
-    { id: "mobile", name: "Mobile Apps" },
-  ];
+ 
 
   const projectsData = [
     {
@@ -423,29 +415,15 @@ export default function Portfolio() {
     },
   ];
 
-  const gridVariants = {
-    hidden: { opacity: 0, y: 60 },
-    visible: {
-      opacity: 1,
-      y: 0,
-      transition: {
-        duration: 0.7,
-        ease: "easeOut",
-      },
-    },
-  };
-  //  const ref = useRef(null);
-  const isInView = useInView(ref, { once: true, margin: "0px 0px -80px 0px" });
-
   return (
     <section
       id="projects"
       ref={sectionRef}
       className="bg-[#111111] px-8  min-h-screen text-[#AAAAAA] py-16 relative overflow-hidden"
     >
-      <div className="max-w-5xl text-center mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+      <div className="max-w-5xl text-center  mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <motion.h2
-          className="text-6xl sm:text-6xl md:text-7xl font-bold mb-6 text-[#A6A6A6]"
+          className="text-6xl sm:text-6xl md:text-7xl  font-bold mb-6 text-[#A6A6A6]"
           style={{ y: yHeading, opacityHeading, scale }}
           // transition={{ duration: 0.8 }}
         >
@@ -456,13 +434,13 @@ export default function Portfolio() {
           className="max-w-5xl mx-auto flex justify-center gap-3 flex-wrap mb-16"
           ref={filterButtonsRef}
           style={{
-            y: ySkills,
-            opacitySkills,
+            y: yCategory,
+            opacityCategory,
             scale: useTransform(smoothScroll, [0, 0.5], [0.98, 1]),
           }}
           transition={{ duration: 0.5, ease: "easeOut" }}
         >
-          {["all", "branding", "logo", "uiux", "web", "design"].map(
+          {["all",   "uiux", "web", "freelance"].map(
             (cat, idx) => (
               <button
                 key={cat}
@@ -480,14 +458,20 @@ export default function Portfolio() {
           )}
         </motion.div>
 
-        <div
+        <motion.div
           className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8"
           ref={gridRef}
+           style={{
+            y: yPortfolio,
+            opacityPortfolio,
+            scale: useTransform(smoothScroll, [0, 0.5], [0.98, 1]),
+          }}
+          transition={{ duration: 0.5, ease: "easeOut" }}
         >
           {projectsData.map((project) => (
             <GridItem key={project.id} project={project} />
           ))}
-        </div>
+        </motion.div>
       </div>
     </section>
   );

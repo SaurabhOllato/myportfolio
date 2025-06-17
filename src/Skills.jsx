@@ -258,7 +258,7 @@ const tools = [
     icon: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/postman/postman-original.svg",
   },
   {
-    name: "Framer Motion",
+    name: "Framer",
     icon: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/framermotion/framermotion-original-wordmark.svg",
   },
   {
@@ -314,7 +314,6 @@ const ySkills = useTransform(smoothScroll, [0.2, 0.6], [150, 0]);         // Com
 const yToolsHeading = useTransform(smoothScroll, [0.4, 0.7], [120, 0]);   // Delayed tools heading
 const yToolsSkiils = useTransform(smoothScroll, [0.5, 0.9], [150, 0]);    // Last to animate in
 
-  // const opacity = useTransform(smoothScroll, [0.2, 0.4, 0.8], [0, 1, 1]);
 const opacityHeading = useTransform(smoothScroll, [0.1, 0.4], [0, 1]);
 const opacitySkills = useTransform(smoothScroll, [0.2, 0.5], [0, 1]);
 const opacityTools = useTransform(smoothScroll, [0.5, 0.8], [0, 1]);
@@ -329,11 +328,11 @@ const opacityTools = useTransform(smoothScroll, [0.5, 0.8], [0, 1]);
           style={{ y: yHeading, opacityHeading, scale }}
           // transition={{ duration: 0.8 }}
         >
-          Skills
+          Tech Stack
         </motion.h2>
 
         <motion.div
-          className="max-w-5xl mx-auto grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-6 justify-items-center mb-16"
+          className="max-w-5xl mx-auto grid grid-cols-3 sm:grid-cols-3 md:grid-cols-4 gap-6 justify-items-center mb-16"
           style={{
             y: ySkills,
           opacitySkills,
@@ -345,8 +344,8 @@ const opacityTools = useTransform(smoothScroll, [0.5, 0.8], [0, 1]);
           {skills.map((skill, i) => (
             <MotionFadeUp key={i}>
               <div className="hex relative w-28 h-32 flex items-center justify-center transform transition-transform hover:rotate-3">
-                <div className="absolute w-full h-full bg-indigo-500/20 blur-xl rounded-[10%] scale-110" />
-                <div className="w-24 h-28 bg-[#1a1a1a] border border-white/10 rounded-[10%] flex flex-col items-center justify-center shadow-md hover:shadow-indigo-500/30">
+                {/* <div className="absolute w-full h-full bg-indigo-500/20 blur-xl rounded-[10%] scale-110" /> */}
+                <div className="w-24 h-28 bg-[#1a1a1a] text-white cursor-pointer border border-white/10 rounded-[10%] flex flex-col items-center justify-center shadow-md hover:shadow-indigo-500/30">
                   <img
                     src={skill.icon}
                     alt={skill.name}
@@ -359,16 +358,16 @@ const opacityTools = useTransform(smoothScroll, [0.5, 0.8], [0, 1]);
           ))}
         </motion.div>
 
-        <motion.h2
-          className="text-6xl sm:text-6xl md:text-7xl font-bold mb-6 text-[#A6A6A6]"
+        <motion.h6
+          className="text-2xl sm:text-3xl md:text-3xl font-bold mb-6 text-[#A6A6A6]"
           style={{ y: yToolsHeading, opacityHeading, scale }}
           transition={{ duration: 0.8 }}
         >
-          Tools
-        </motion.h2>
+          Libraries & Frameworks
+        </motion.h6>
 
         <motion.div
-          className="max-w-5xl mx-auto grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-6 justify-items-center"
+          className="max-w-5xl mx-auto grid grid-cols-3 sm:grid-cols-3 md:grid-cols-4 gap-6 justify-items-center"
           style={{
             y: yToolsSkiils,
             opacityTools,
@@ -379,8 +378,8 @@ const opacityTools = useTransform(smoothScroll, [0.5, 0.8], [0, 1]);
           {tools.map((tool, i) => (
             <MotionFadeUp key={i}>
               <div className="hex relative w-28 h-32 flex items-center justify-center transform transition-transform hover:rotate-3">
-                <div className="absolute w-full h-full bg-pink-500/20 blur-xl rounded-[10%] scale-110" />
-                <div className="w-24 h-28 bg-[#1a1a1a] border border-white/10 rounded-[10%] flex flex-col items-center justify-center shadow-md hover:shadow-pink-500/30">
+                {/* <div className="absolute w-full h-full bg-pink-500/20 blur-xl rounded-[10%] scale-110" /> */}
+                <div className="w-24 h-28 bg-[#1a1a1a] cursor-pointer text-white border border-white/10 rounded-[10%] flex flex-col items-center justify-center shadow-md hover:shadow-pink-500/30">
                   <img
                     src={tool.icon}
                     alt={tool.name}

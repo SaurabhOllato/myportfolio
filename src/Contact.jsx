@@ -102,22 +102,31 @@
 //   );
 // }
 
-import { motion, useMotionValue, useAnimationFrame, useTransform } from "framer-motion";
+import {
+  motion,
+  useMotionValue,
+  useAnimationFrame,
+  useTransform,
+} from "framer-motion";
 import { useRef, useState } from "react";
-import { FiMail, FiTwitter, FiGithub, FiLinkedin, FiInstagram } from "react-icons/fi";
+import {
+  FiMail,
+  FiTwitter,
+  FiGithub,
+  FiLinkedin,
+  FiInstagram,
+} from "react-icons/fi";
 import { SiUpwork } from "react-icons/si";
 
 export default function Contact() {
+  const sectionRef = useRef(null);
   const [hoveredItem, setHoveredItem] = useState(null);
   const x = useMotionValue(0);
   const marqueeRef = useRef(null);
-  const sectionRef = useRef(null);
-
-  // Marquee animation
-  const speed = 80; // pixels per second
-  const direction = 1;
   const isHovering = useRef(false);
   const lastTime = useRef(0);
+  const speed = 80; // pixels/sec
+  const direction = 1;
 
   useAnimationFrame((t) => {
     if (!marqueeRef.current) return;
@@ -131,57 +140,57 @@ export default function Contact() {
     lastTime.current = t;
 
     if (!isHovering.current) {
-      const moveBy = (speed * delta) / 1000 * direction;
-      // const width = marqueeRef.current.scrollWidth;
-      const width = marqueeRef.current.scrollWidth / 2; 
+      const moveBy = ((speed * delta) / 1000) * direction;
+      const width = marqueeRef.current.scrollWidth / 2; // half because we duplicate once
       const currentX = x.get();
-      const nextX = currentX + moveBy;
+      const nextX = currentX - moveBy;
 
-      x.set(nextX >= width ? -width : nextX);
+      // Loop seamlessly
+      x.set(nextX <= -width ? 0 : nextX);
     }
   });
 
   // Social links data
   const socialLinks = [
-    { 
-      name: "TWITTER", 
-      icon: <FiTwitter className="text-xl" />,
-      url: "https://twitter.com/yourusername"
-    },
-    { 
-      name: "INSTAGRAM", 
+    // {
+    //   name: "TWITTER",
+    //   icon: <FiTwitter className="text-xl" />,
+    //   url: "https://twitter.com/yourusername"
+    // },
+    {
+      name: "INSTAGRAM",
       icon: <FiInstagram className="text-xl" />,
-      url: "https://instagram.com/yourusername"
+      url: "https://instagram.com/yourusername",
     },
-    { 
-      name: "GITHUB", 
+    {
+      name: "GITHUB",
       icon: <FiGithub className="text-xl" />,
-      url: "https://github.com/yourusername"
+      url: "https://github.com/yourusername",
     },
-    { 
-      name: "LINKEDIN", 
+    {
+      name: "LINKEDIN",
       icon: <FiLinkedin className="text-xl" />,
-      url: "https://linkedin.com/in/yourusername"
+      url: "https://linkedin.com/in/yourusername",
     },
-    { 
-      name: "UPWORK", 
-      icon: <SiUpwork className="text-xl" />,
-      url: "https://upwork.com/freelancers/yourusername"
-    }
+    // {
+    //   name: "UPWORK",
+    //   icon: <SiUpwork className="text-xl" />,
+    //   url: "https://upwork.com/freelancers/yourusername"
+    // }
   ];
 
   return (
-    <section 
+    <section
       ref={sectionRef}
       className="relative overflow-hidden bg-[#111111] text-[#737373] py-20 px-4 md:px-8 flex flex-col"
       id="contact"
     >
       {/* Animated background elements */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        {[...Array(5)].map((_, i) => (
+        {[...Array(2)].map((_, i) => (
           <motion.div
             key={i}
-            className="absolute rounded-full bg-indigo-900/10"
+            className="absolute rounded-full bg-white/10 backdrop-blur-sm"
             style={{
               width: `${Math.random() * 200 + 100}px`,
               height: `${Math.random() * 200 + 100}px`,
@@ -203,38 +212,39 @@ export default function Contact() {
       </div>
 
       {/* Top Infinite Scroller */}
-       <div className="relative h-24 md:h-32 border-y border-[#222] overflow-hidden cursor-pointer">
-      <motion.div
-        ref={marqueeRef}
-        className="absolute top-0 left-0 whitespace-nowrap text-5xl sm:text-6xl md:text-7xl font-bold text-[#737373] hover:text-[#A6A6A6] select-none h-full flex items-center"
-        style={{ x }}
-        onMouseEnter={() => {
-          isHovering.current = true;
-          document.body.style.cursor = "grab";
-        }}
-        onMouseLeave={() => {
-          isHovering.current = false;
-          document.body.style.cursor = "default";
-        }}
-        onMouseDown={() => {
-          document.body.style.cursor = "grabbing";
-        }}
-        onMouseUp={() => {
-          document.body.style.cursor = "grab";
-        }}
-      >
-        {/* Duplicate the content once for seamless looping */}
-        {[...Array(2)].map((_, i) => (
-          <div key={i} className="flex">
-            {[...Array(6)].map((_, j) => (
-              <span key={j} className="mx-4 md:mx-8">
-                GET IN TOUCH <span className="text-[#A6A6A6]">—</span> AVAILABLE FOR WORK <span className="text-[#A6A6A6]">—</span>
-              </span>
-            ))}
-          </div>
-        ))}
-      </motion.div>
-    </div>
+      <div className="relative h-24 md:h-32 border-y border-[#222] overflow-hidden cursor-pointer">
+        <motion.div
+          ref={marqueeRef}
+          className="absolute top-0 left-0 whitespace-nowrap text-5xl sm:text-6xl md:text-7xl font-bold text-[#737373] hover:text-[#A6A6A6] select-none h-full flex items-center"
+          style={{ x }}
+          onMouseEnter={() => {
+            isHovering.current = true;
+            document.body.style.cursor = "grab";
+          }}
+          onMouseLeave={() => {
+            isHovering.current = false;
+            document.body.style.cursor = "default";
+          }}
+          onMouseDown={() => {
+            document.body.style.cursor = "grabbing";
+          }}
+          onMouseUp={() => {
+            document.body.style.cursor = "grab";
+          }}
+        >
+          {/* Duplicate just once for infinite loop */}
+          {[...Array(2)].map((_, i) => (
+            <div key={i} className="flex min-w-max">
+              {[...Array(6)].map((_, j) => (
+                <span key={j} className="mx-4 md:mx-8">
+                  GET IN TOUCH <span className="text-[#A6A6A6]">—</span>{" "}
+                  AVAILABLE FOR WORK <span className="text-[#A6A6A6]">—</span>
+                </span>
+              ))}
+            </div>
+          ))}
+        </motion.div>
+      </div>
 
       {/* Main Content */}
       <div className="relative z-10 flex flex-col items-center justify-center mt-20 md:mt-32 space-y-10 md:space-y-16">
@@ -247,8 +257,8 @@ export default function Contact() {
         >
           <FiMail className="text-3xl mb-4 text-indigo-400" />
           <h2 className="text-xl sm:text-2xl md:text-3xl text-center font-medium">
-            <a 
-              href="mailto:oluwadareseyii@gmail.com" 
+            <a
+              href="mailto:oluwadareseyii@gmail.com"
               className="hover:text-[#A6A6A6] transition-colors duration-300"
             >
               saurabhchaurasiabbf@gmail.com
@@ -259,7 +269,7 @@ export default function Contact() {
           </p>
         </motion.div>
 
-        <motion.div 
+        <motion.div
           className="flex gap-4 md:gap-6 flex-wrap justify-center"
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
@@ -273,13 +283,13 @@ export default function Contact() {
               target="_blank"
               rel="noopener noreferrer"
               className={`border px-6 py-3 rounded-full flex items-center gap-2 transition-all duration-300 ${
-                hoveredItem === item.name 
+                hoveredItem === item.name
                   ? "bg-indigo-500/10 border-indigo-400 text-white"
                   : "border-gray-700 hover:border-gray-600 text-gray-300"
               }`}
-              whileHover={{ 
+              whileHover={{
                 y: -3,
-                scale: 1.05
+                scale: 1.05,
               }}
               onMouseEnter={() => setHoveredItem(item.name)}
               onMouseLeave={() => setHoveredItem(null)}
@@ -290,7 +300,7 @@ export default function Contact() {
           ))}
         </motion.div>
 
-        <motion.div 
+        <motion.div
           className="w-full flex flex-col md:flex-row justify-between items-center text-sm text-gray-500 mt-20 md:mt-32 px-4"
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}

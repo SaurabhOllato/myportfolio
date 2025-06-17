@@ -6,7 +6,7 @@ gsap.registerPlugin(ScrollTrigger);
 
 const workData = [
   {
-    year: "2022",
+    // year: "2022",
     title: "Frontend Developer",
     company: "Ollato",
     description: "Built UI with React and Tailwind.",
