@@ -176,8 +176,15 @@
 import React, { useEffect, useRef } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { useScroll, useSpring, useTransform, motion } from "framer-motion";
+import {
+  useScroll,
+  useSpring,
+  useTransform,
+  motion,
+  useInView,
+} from "framer-motion";
 import { FiExternalLink, FiGithub } from "react-icons/fi";
+import GridItem from "./GridItem";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -205,10 +212,19 @@ export default function Portfolio() {
   });
 
   // Animations for about section
-  const yHeading = useTransform(smoothScroll, [0, 1], [100, 0]);
-  const yParagraph = useTransform(smoothScroll, [0, 1], [150, 0]);
+  const yHeading = useTransform(smoothScroll, [0, 0.4], [80, 0]);
+  const opacityHeading = useTransform(smoothScroll, [0.1, 0.4], [0, 1]);
+  const ySkills = useTransform(smoothScroll, [0.2, 0.6], [150, 0]); // Comes after heading
+  const yToolsHeading = useTransform(smoothScroll, [0.4, 0.7], [120, 0]); // Delayed tools heading
+  const yToolsSkiils = useTransform(smoothScroll, [0.5, 0.9], [150, 0]); // Last to animate in
+
+  // const opacity = useTransform(smoothScroll, [0.2, 0.4, 0.8], [0, 1, 1]);
+  const opacitySkills = useTransform(smoothScroll, [0.2, 0.5], [0, 1]);
+
+  const yParagraph = useTransform(smoothScroll, [0.2, 0.6], [150, 0]);
   const opacity = useTransform(smoothScroll, [0.2, 0.4, 0.8], [0, 1, 1]);
   const scale = useTransform(smoothScroll, [0, 0.5], [0.95, 1]);
+
   const sectionRef = useRef(null);
   const headingRef = useRef(null);
   const filterButtonsRef = useRef(null);
@@ -407,57 +423,44 @@ export default function Portfolio() {
     },
   ];
 
+  const gridVariants = {
+    hidden: { opacity: 0, y: 60 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: {
+        duration: 0.7,
+        ease: "easeOut",
+      },
+    },
+  };
+  //  const ref = useRef(null);
+  const isInView = useInView(ref, { once: true, margin: "0px 0px -80px 0px" });
+
   return (
     <section
       id="projects"
       ref={sectionRef}
-      className="bg-[#111111] min-h-screen text-[#AAAAAA] py-16 relative overflow-hidden"
+      className="bg-[#111111] px-8  min-h-screen text-[#AAAAAA] py-16 relative overflow-hidden"
     >
-      {/* Animated background elements */}
-      {/* <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        {[...Array(6)].map((_, i) => (
-          <div
-            key={i}
-            className="absolute rounded-full bg-indigo-900/10"
-            style={{
-              width: `${Math.random() * 200 + 100}px`,
-              height: `${Math.random() * 200 + 100}px`,
-              top: `${Math.random() * 100}%`,
-              left: `${Math.random() * 100}%`,
-              filter: "blur(40px)",
-              transform: `scale(${Math.random() * 2 + 1})`,
-            }}
-          />
-        ))}
-      </div> */}
-
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-        <motion.div
-          className="text-center mb-16 md:mb-24"
-          style={{
-            y: yHeading,
-            opacity,
-            scale,
-          }}
+      <div className="max-w-5xl text-center mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+        <motion.h2
+          className="text-6xl sm:text-6xl md:text-7xl font-bold mb-6 text-[#A6A6A6]"
+          style={{ y: yHeading, opacityHeading, scale }}
+          // transition={{ duration: 0.8 }}
         >
-          <h2 className="text-5xl md:text-7xl font-bold text-white mb-6">
-            My <span className="text-indigo-400">Work</span>
-          </h2>
-          <motion.div
-            className="w-24 h-1 bg-indigo-500 mx-auto mb-8"
-            style={{ y: yParagraph }}
-          />
-          <motion.p
-            className="text-lg md:text-xl text-gray-400 max-w-3xl mx-auto"
-            style={{ y: yParagraph }}
-          >
-            Selected projects showcasing my skills in design and development
-          </motion.p>
-        </motion.div>
+          My Work
+        </motion.h2>
 
-        <div
-          className="flex justify-center gap-3 flex-wrap mb-16"
+        <motion.div
+          className="max-w-5xl mx-auto flex justify-center gap-3 flex-wrap mb-16"
           ref={filterButtonsRef}
+          style={{
+            y: ySkills,
+            opacitySkills,
+            scale: useTransform(smoothScroll, [0, 0.5], [0.98, 1]),
+          }}
+          transition={{ duration: 0.5, ease: "easeOut" }}
         >
           {["all", "branding", "logo", "uiux", "web", "design"].map(
             (cat, idx) => (
@@ -475,72 +478,14 @@ export default function Portfolio() {
               </button>
             )
           )}
-        </div>
+        </motion.div>
 
         <div
           className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8"
           ref={gridRef}
         >
           {projectsData.map((project) => (
-            <div
-              key={project.id}
-              className="portfolio-item group relative overflow-hidden rounded-xl bg-gradient-to-b from-white/5 to-white/[0.01] backdrop-blur-sm border border-white/5 shadow-lg transition-all duration-500 hover:border-indigo-500/50 hover:shadow-indigo-500/10"
-              data-category={project.category}
-            >
-              <div className="relative h-72 md:h-80 overflow-hidden">
-                <img
-                  src={project.img}
-                  alt={project.title}
-                  className="w-full h-full object-cover transition-all duration-700 group-hover:scale-105"
-                />
-
-                {/* Project tags */}
-                <div className="portfolio-tags absolute top-4 left-4 flex flex-wrap gap-2 opacity-0 translate-y-2 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-500">
-                  {project.tags.map((tag) => (
-                    <span
-                      key={tag}
-                      className="text-xs font-medium px-2.5 py-1 rounded-full bg-indigo-500/10 text-indigo-300 backdrop-blur-sm"
-                    >
-                      {tag}
-                    </span>
-                  ))}
-                </div>
-
-                {/* Project content overlay */}
-                <div className="portfolio-content absolute inset-0 bg-gradient-to-t from-black/90 via-black/60 to-transparent p-6 flex flex-col justify-end opacity-0 translate-y-6 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-500">
-                  <div>
-                    <h3 className="text-white text-xl font-bold mb-2">
-                      {project.title}
-                    </h3>
-                    <p className="text-gray-300 text-sm mb-4">
-                      {project.subtitle}
-                    </p>
-                    <div className="flex gap-3 flex-wrap">
-                      {project.links.live && (
-                        <a
-                          href={project.links.live}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="inline-flex items-center gap-1 text-sm font-medium px-4 py-2 rounded-full bg-indigo-500 text-white hover:bg-indigo-600 transition-colors duration-300"
-                        >
-                          Live Demo <FiExternalLink className="text-sm" />
-                        </a>
-                      )}
-                      {project.links.code && (
-                        <a
-                          href={project.links.code}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="inline-flex items-center gap-1 text-sm font-medium px-4 py-2 rounded-full bg-white/10 text-white hover:bg-white/20 transition-colors duration-300"
-                        >
-                          Code <FiGithub className="text-sm" />
-                        </a>
-                      )}
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
+            <GridItem key={project.id} project={project} />
           ))}
         </div>
       </div>

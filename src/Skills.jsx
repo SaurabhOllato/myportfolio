@@ -109,11 +109,10 @@
 //   }
 // }, []);
 
-
 //   return (
 //     <section ref={sectionRef} className="bg-[#111111] text-[#AAAAAA] relative mx-auto py-16 px-4 min-h-screen">
 //       <div className="max-w-4xl mx-auto relative z-10">
-        
+
 //         {/* Title */}
 //         <div ref={titleRef} className="relative">
 //           <h5 className="text-2xl sm:text-6xl font-semibold mb-10 border-b-2 border-indigo-500 pb-2 text-center mx-auto lg:w-[500px]">
@@ -213,103 +212,186 @@
 //   </div>
 // </section> */}
 
-
 //     </section>
 //   );
 // }
 
-import { useEffect, useRef } from "react";
-import gsap from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
-gsap.registerPlugin(ScrollTrigger);
+import { useRef } from "react";
+import {
+  motion,
+  useScroll,
+  useTransform,
+  useSpring,
+  useInView,
+} from "framer-motion";
 
 const skills = [
-  { name: "HTML", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/html5/html5-original.svg" },
-  { name: "CSS", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/css3/css3-original.svg" },
-  { name: "JavaScript", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg" },
-  { name: "React", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg" },
-  { name: "Tailwind", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/tailwindcss/tailwindcss-plain.svg" },
-  { name: "Node.js", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nodejs/nodejs-original.svg" },
+  {
+    name: "HTML",
+    icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/html5/html5-original.svg",
+  },
+  {
+    name: "CSS",
+    icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/css3/css3-original.svg",
+  },
+  {
+    name: "JavaScript",
+    icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg",
+  },
+  {
+    name: "React",
+    icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg",
+  },
+  {
+    name: "Tailwind",
+    icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/tailwindcss/tailwindcss-plain.svg",
+  },
+  {
+    name: "Node.js",
+    icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nodejs/nodejs-original.svg",
+  },
 ];
 
 const tools = [
-  { name: "Postman", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/postman/postman-original.svg" },
-  { name: "Framer Motion", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/framermotion/framermotion-original-wordmark.svg" },
-  { name: "Git", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/git/git-original.svg" },
-  { name: "GitHub", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/github/github-original-wordmark.svg" },
-  { name: "Vercel", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/vercel/vercel-original-wordmark.svg" },
-  { name: "Figma", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/figma/figma-original.svg" },
+  {
+    name: "Postman",
+    icon: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/postman/postman-original.svg",
+  },
+  {
+    name: "Framer Motion",
+    icon: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/framermotion/framermotion-original-wordmark.svg",
+  },
+  {
+    name: "Git",
+    icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/git/git-original.svg",
+  },
+  {
+    name: "GitHub",
+    icon: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/github/github-original-wordmark.svg",
+  },
+  {
+    name: "Vercel",
+    icon: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/vercel/vercel-original-wordmark.svg",
+  },
+  {
+    name: "Figma",
+    icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/figma/figma-original.svg",
+  },
 ];
 
-export default function HexagonGrid() {
-  const skillRef = useRef();
-  const toolsRef = useRef();
-
-  useEffect(() => {
-    const animateItems = (container) => {
-      const hexes = container.querySelectorAll(".hex");
-      gsap.fromTo(
-        hexes,
-        { opacity: 0, rotateY: -90 },
-        {
-          opacity: 1,
-          rotateY: 0,
-          stagger: 0.1,
-          duration: 1,
-          ease: "back.out(1.7)",
-          scrollTrigger: {
-            trigger: container,
-            start: "top 80%",
-          },
-        }
-      );
-    };
-
-    animateItems(skillRef.current);
-    animateItems(toolsRef.current);
-  }, []);
+// Animation wrapper
+const MotionFadeUp = ({ children }) => {
+  const ref = useRef(null);
+  const isInView = useInView(ref, { once: false, margin: "-100px 0px" });
 
   return (
-    <section className="py-16 bg-[#0e0e0e] text-white px-4">
-      <h2 className="text-3xl sm:text-4xl font-bold text-center mb-12">🚀 My Skills</h2>
+    <motion.div
+      ref={ref}
+      initial={{ opacity: 0, y: 40 }}
+      animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 40 }}
+      transition={{ duration: 0.6, ease: "easeOut" }}
+    >
+      {children}
+    </motion.div>
+  );
+};
 
-      {/* Skills Grid */}
-      <div
-        ref={skillRef}
-        className="max-w-5xl mx-auto grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-6 justify-items-center mb-16"
-      >
-        {skills.map((skill, i) => (
-          <div
-            key={i}
-            className="hex relative w-28 h-32 flex items-center justify-center transform transition-transform hover:rotate-3"
-          >
-            <div className="absolute w-full h-full bg-indigo-500/20 blur-xl rounded-[10%] scale-110" />
-            <div className="w-24 h-28 bg-[#1a1a1a] border border-white/10 rounded-[10%] flex flex-col items-center justify-center shadow-md hover:shadow-indigo-500/30">
-              <img src={skill.icon} alt={skill.name} className="w-10 h-10 mb-2" />
-              <p className="text-sm text-center">{skill.name}</p>
-            </div>
-          </div>
-        ))}
-      </div>
+export default function HexagonGrid() {
+  const ref = useRef(null);
 
-      {/* Tools Section */}
-      <h2 className="text-2xl sm:text-3xl font-semibold text-center mb-10">🛠 Tools I Use</h2>
-      <div
-        ref={toolsRef}
-        className="max-w-5xl mx-auto grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-6 justify-items-center"
-      >
-        {tools.map((tool, i) => (
-          <div
-            key={i}
-            className="hex relative w-28 h-32 flex items-center justify-center transform transition-transform hover:rotate-3"
-          >
-            <div className="absolute w-full h-full bg-pink-500/20 blur-xl rounded-[10%] scale-110" />
-            <div className="w-24 h-28 bg-[#1a1a1a] border border-white/10 rounded-[10%] flex flex-col items-center justify-center shadow-md hover:shadow-pink-500/30">
-              <img src={tool.icon} alt={tool.name} className="w-10 h-10 mb-2" />
-              <p className="text-sm text-center">{tool.name}</p>
-            </div>
-          </div>
-        ))}
+  const { scrollYProgress } = useScroll({
+    target: ref,
+    offset: ["start end", "end start"],
+  });
+
+  const smoothScroll = useSpring(scrollYProgress, {
+     damping: 25,   // higher = less bounce
+  stiffness: 180
+  });
+
+ const yHeading = useTransform(smoothScroll, [0, 0.4], [80, 0]);           // Enters earlier, less dramatic
+const ySkills = useTransform(smoothScroll, [0.2, 0.6], [150, 0]);         // Comes after heading
+const yToolsHeading = useTransform(smoothScroll, [0.4, 0.7], [120, 0]);   // Delayed tools heading
+const yToolsSkiils = useTransform(smoothScroll, [0.5, 0.9], [150, 0]);    // Last to animate in
+
+  // const opacity = useTransform(smoothScroll, [0.2, 0.4, 0.8], [0, 1, 1]);
+const opacityHeading = useTransform(smoothScroll, [0.1, 0.4], [0, 1]);
+const opacitySkills = useTransform(smoothScroll, [0.2, 0.5], [0, 1]);
+const opacityTools = useTransform(smoothScroll, [0.5, 0.8], [0, 1]);
+
+  const scale = useTransform(smoothScroll, [0, 0.5], [0.95, 1]);
+
+  return (
+    <section ref={ref} className="py-16 bg-[#111111] px-4">
+      <div className="max-w-4xl mx-auto relative z-10 text-center">
+        <motion.h2
+          className="text-6xl sm:text-6xl md:text-7xl font-bold mb-6 text-[#A6A6A6]"
+          style={{ y: yHeading, opacityHeading, scale }}
+          // transition={{ duration: 0.8 }}
+        >
+          Skills
+        </motion.h2>
+
+        <motion.div
+          className="max-w-5xl mx-auto grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-6 justify-items-center mb-16"
+          style={{
+            y: ySkills,
+          opacitySkills,
+            scale: useTransform(smoothScroll, [0, 0.5], [0.98, 1]),
+            
+          }}
+          transition={{ duration: 0.5, ease: "easeOut" }}
+        >
+          {skills.map((skill, i) => (
+            <MotionFadeUp key={i}>
+              <div className="hex relative w-28 h-32 flex items-center justify-center transform transition-transform hover:rotate-3">
+                <div className="absolute w-full h-full bg-indigo-500/20 blur-xl rounded-[10%] scale-110" />
+                <div className="w-24 h-28 bg-[#1a1a1a] border border-white/10 rounded-[10%] flex flex-col items-center justify-center shadow-md hover:shadow-indigo-500/30">
+                  <img
+                    src={skill.icon}
+                    alt={skill.name}
+                    className="w-10 h-10 mb-2"
+                  />
+                  <p className="text-sm text-center">{skill.name}</p>
+                </div>
+              </div>
+            </MotionFadeUp>
+          ))}
+        </motion.div>
+
+        <motion.h2
+          className="text-6xl sm:text-6xl md:text-7xl font-bold mb-6 text-[#A6A6A6]"
+          style={{ y: yToolsHeading, opacityHeading, scale }}
+          transition={{ duration: 0.8 }}
+        >
+          Tools
+        </motion.h2>
+
+        <motion.div
+          className="max-w-5xl mx-auto grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-6 justify-items-center"
+          style={{
+            y: yToolsSkiils,
+            opacityTools,
+            scale: useTransform(smoothScroll, [0, 0.5], [0.98, 1]),
+          }}
+          transition={{ duration: 5, delay: 0.9 }}
+        >
+          {tools.map((tool, i) => (
+            <MotionFadeUp key={i}>
+              <div className="hex relative w-28 h-32 flex items-center justify-center transform transition-transform hover:rotate-3">
+                <div className="absolute w-full h-full bg-pink-500/20 blur-xl rounded-[10%] scale-110" />
+                <div className="w-24 h-28 bg-[#1a1a1a] border border-white/10 rounded-[10%] flex flex-col items-center justify-center shadow-md hover:shadow-pink-500/30">
+                  <img
+                    src={tool.icon}
+                    alt={tool.name}
+                    className="w-10 h-10 mb-2"
+                  />
+                  <p className="text-sm text-center">{tool.name}</p>
+                </div>
+              </div>
+            </MotionFadeUp>
+          ))}
+        </motion.div>
       </div>
     </section>
   );
