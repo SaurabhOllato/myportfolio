@@ -311,8 +311,8 @@ export default function Contact() {
             GIRGAON, MUMBAI <span className="text-white font-medium">04</span>
           </div>
           <div className="text-center md:text-right">
-            <p>© {new Date().getFullYear()} All Rights Reserved</p>
-            <p className="text-xs mt-1">Designed & Built with ❤️</p>
+            {/* <p>© {new Date().getFullYear()} All Rights Reserved</p> */}
+            <p className="text-xs mt-1">Thank you for scrolling ❤️</p>
           </div>
         </motion.div>
       </div>

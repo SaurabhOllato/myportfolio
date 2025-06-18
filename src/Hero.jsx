@@ -1,4 +1,4 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import gsap from "gsap";
 import ScrollTrigger from "gsap/ScrollTrigger";
 import Particles from "./Projects.jsx";
@@ -19,6 +19,19 @@ const Hero = () => {
   const { scrollY } = useScroll();
 
   const heroRef = useRef(null);
+   const fullName = "SaurabhChaurasia";
+  const [displayed, setDisplayed] = useState("");
+
+    useEffect(() => {
+    let i = 0;
+    const interval = setInterval(() => {
+      setDisplayed(fullName.slice(0, i + 1));
+      i++;
+      if (i === fullName.length) clearInterval(interval);
+    }, 100); // typing speed
+
+    return () => clearInterval(interval);
+  }, []);
 
   useEffect(() => {
     const tl = gsap.timeline({
@@ -59,9 +72,14 @@ const Hero = () => {
       {/* Header + Hero Container */}
       <div className="relative z-10 flex flex-row max-w-4xl mx-auto items-center justify-between w-full px-6 py-3 sm:h-20">
         {/* Left: Logo */}
-        <div className="text-white font">
-          <h1>SaurabhChaurasia</h1>
-        </div>
+        <motion.h1
+        className="text-white font text-sm sm:text-xl font-semibold"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 0.5 }}
+      >
+        {displayed}
+      </motion.h1>
 
         {/* Right: Resume Button */}
         <div>
@@ -101,14 +119,15 @@ const Hero = () => {
       </div>
 
       {/* Scroll indicator */}
-      <motion.div
+      <motion.a
+      href="#about"
         style={{ opacity }}
         className="absolute bottom-8 left-1/2 transform -translate-x-1/2 z-10"
       >
         <div className="animate-bounce w-6 h-10 border-2 border-white rounded-full flex justify-center">
           <div className="w-1 h-2 bg-white rounded-full mt-2"></div>
         </div>
-      </motion.div>
+      </motion.a>
     </section>
   );
 };

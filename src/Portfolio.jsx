@@ -185,6 +185,7 @@ import {
 } from "framer-motion";
 import { FiExternalLink, FiGithub } from "react-icons/fi";
 import GridItem from "./GridItem";
+import { Link } from "react-router-dom";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -338,15 +339,13 @@ export default function Portfolio() {
     });
   };
 
- 
-
   const projectsData = [
     {
       id: 1,
       title: "E-Commerce Platform",
       subtitle: "Full-stack online store with payment integration",
       category: "web",
-      img: "https://res.cloudinary.com/dxscy1ixg/image/upload/v1749815459/pexels-carolinefeelgood-3363681_kegpgl.jpg",
+      img: "https://res.cloudinary.com/dxscy1ixg/image/upload/v1750226041/project1_1_gq5w30.jpg",
       tags: ["React", "Node.js", "MongoDB", "Stripe"],
       links: {
         live: "#",
@@ -358,7 +357,7 @@ export default function Portfolio() {
       title: "Dashboard UI Kit",
       subtitle: "Design system for analytics applications",
       category: "uiux",
-      img: "https://source.unsplash.com/random/600x600/?dashboard",
+      img: "https://res.cloudinary.com/dxscy1ixg/image/upload/v1750226041/mediaplus_tyw2y0.jpg",
       tags: ["Figma", "Design System", "UI Components"],
       links: {
         live: "#",
@@ -370,7 +369,7 @@ export default function Portfolio() {
       title: "Corporate Branding",
       subtitle: "Complete visual identity for tech startup",
       category: "branding",
-      img: "https://source.unsplash.com/random/600x600/?branding",
+      img: "https://res.cloudinary.com/dxscy1ixg/image/upload/v1750226041/project2_2_wlfcms.jpg",
       tags: ["Logo", "Typography", "Color Palette"],
       links: {
         live: "#",
@@ -382,7 +381,7 @@ export default function Portfolio() {
       title: "Fitness Mobile App",
       subtitle: "Workout tracking and nutrition planning",
       category: "mobile",
-      img: "https://source.unsplash.com/random/600x600/?fitness",
+      img: "https://res.cloudinary.com/dxscy1ixg/image/upload/v1750226041/IMG_6559_ovcsko.jpg",
       tags: ["React Native", "Firebase", "Health API"],
       links: {
         live: "#",
@@ -419,49 +418,56 @@ export default function Portfolio() {
     <section
       id="projects"
       ref={sectionRef}
-      className="bg-[#111111] px-8  min-h-screen text-[#AAAAAA] py-16 relative overflow-hidden"
+      className="bg-[#111111] px-8  min-h-screen text-[#AAAAAA] py-10 lg:py-20 relative "
     >
       <div className="max-w-5xl text-center  mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-        <motion.h2
-          className="text-6xl sm:text-6xl md:text-7xl  font-bold mb-6 text-[#A6A6A6]"
-          style={{ y: yHeading, opacityHeading, scale }}
-          // transition={{ duration: 0.8 }}
-        >
-          My Work
-        </motion.h2>
+
+        <div className="sticky top-0 bg-[#111111] z-50 py-1">
+          <Link
+            to="/"
+            className="inline-block mb-6 text-indigo-400 hover:text-white transition duration-300 text-sm sm:text-base"
+          >
+            ← Back to Portfolio
+          </Link>
+          <motion.h2
+            className="text-4xl sm:text-5xl md:text-4xl font-bold mb-6 text-[#A6A6A6]"
+            style={{
+              y: yHeading,
+              opacity: opacityHeading,
+            }}
+          >
+            My Work
+          </motion.h2>
+        </div>
 
         <motion.div
           className="max-w-5xl mx-auto flex justify-center gap-3 flex-wrap mb-16"
           ref={filterButtonsRef}
           style={{
             y: yCategory,
-            opacityCategory,
-            scale: useTransform(smoothScroll, [0, 0.5], [0.98, 1]),
+            opacity: opacityCategory,
           }}
-          transition={{ duration: 0.5, ease: "easeOut" }}
         >
-          {["all",   "uiux", "web", "freelance"].map(
-            (cat, idx) => (
-              <button
-                key={cat}
-                onClick={(e) => handleFilterClick(e, cat)}
-                className={`filter-btn px-5 py-2.5 rounded-full transition-all duration-300 font-medium text-sm sm:text-base ${
-                  idx === 0
-                    ? "text-white bg-indigo-500/20"
-                    : "text-[#AAAAAA] hover:text-white hover:bg-indigo-500/10"
-                }`}
-                data-filter={cat}
-              >
-                {cat.charAt(0).toUpperCase() + cat.slice(1)}
-              </button>
-            )
-          )}
+          {["all", "uiux", "web", "freelance"].map((cat, idx) => (
+            <button
+              key={cat}
+              onClick={(e) => handleFilterClick(e, cat)}
+              className={`filter-btn px-5 py-2.5 rounded-full transition-all duration-300 font-medium text-sm sm:text-base ${
+                idx === 0
+                  ? "text-white bg-indigo-500/20"
+                  : "text-[#AAAAAA] hover:text-white hover:bg-indigo-500/10"
+              }`}
+              data-filter={cat}
+            >
+              {cat.charAt(0).toUpperCase() + cat.slice(1)}
+            </button>
+          ))}
         </motion.div>
 
         <motion.div
           className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8"
           ref={gridRef}
-           style={{
+          style={{
             y: yPortfolio,
             opacityPortfolio,
             scale: useTransform(smoothScroll, [0, 0.5], [0.98, 1]),

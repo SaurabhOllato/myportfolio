@@ -263,6 +263,7 @@ const About = () => {
       {/* About Section */}
       <section
         ref={ref}
+        id="about"
         className="min-h-screen flex items-center justify-center bg-[#111111] text-[#737373] overflow-hidden relative px-8 sm:px-8"
       >
         <motion.div
