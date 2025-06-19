@@ -418,7 +418,7 @@ export default function Portfolio() {
     <section
       id="projects"
       ref={sectionRef}
-      className="bg-[#111111] px-8  min-h-screen text-[#AAAAAA] py-10 lg:py-20 relative "
+      className="bg-[#111111] px-8  min-h-screen text-[#AAAAAA] py-10 lg:pb-20 relative "
     >
       <div className="max-w-5xl text-center  mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
 
@@ -443,10 +443,10 @@ export default function Portfolio() {
         <motion.div
           className="max-w-5xl mx-auto flex justify-center gap-3 flex-wrap mb-16"
           ref={filterButtonsRef}
-          style={{
-            y: yCategory,
-            opacity: opacityCategory,
-          }}
+          // style={{
+          //   y: yCategory,
+          //   opacity: opacityCategory,
+          // }}
         >
           {["all", "uiux", "web", "freelance"].map((cat, idx) => (
             <button
@@ -467,11 +467,11 @@ export default function Portfolio() {
         <motion.div
           className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8"
           ref={gridRef}
-          style={{
-            y: yPortfolio,
-            opacityPortfolio,
-            scale: useTransform(smoothScroll, [0, 0.5], [0.98, 1]),
-          }}
+          // style={{
+          //   y: yPortfolio,
+          //   opacityPortfolio,
+          //   scale: useTransform(smoothScroll, [0, 0.5], [0.98, 1]),
+          // }}
           transition={{ duration: 0.5, ease: "easeOut" }}
         >
           {projectsData.map((project) => (

@@ -39,7 +39,7 @@ export default function GridItem({ project }) {
           {project.tags.map((tag) => (
             <span
               key={tag}
-              className="text-xs font-medium px-2.5 py-1 rounded-full bg-indigo-500/10 text-indigo-300 backdrop-blur-sm"
+              className="text-xs font-medium px-2.5 py-1 rounded-full bg-indigo-500/10 text-indigo-600 backdrop-blur-sm"
             >
               {tag}
             </span>
