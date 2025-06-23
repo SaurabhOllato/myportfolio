@@ -63,6 +63,10 @@ const Hero = () => {
   // Fade out scroll indicator as user scrolls down
   const opacity = useTransform(scrollYProgress, [0, 0.2], [1, 0]);
 
+  const handleResumeClick = () => {
+  window.open('/path-to-your-resume.pdf', '_blank');
+};
+
   return (
     <section
       id="home"
@@ -86,6 +90,7 @@ const Hero = () => {
           <button
             ref={cvButtonRef}
             className=" text-white px-6 py-2 rounded-full hover:from-purple-700 hover:to-indigo-700 transition-all duration-300 shadow-lg hover:shadow-purple-500/20"
+           onClick={handleResumeClick}
           >
             Resume
           </button>
