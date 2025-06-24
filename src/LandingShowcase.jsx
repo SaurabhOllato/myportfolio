@@ -9,9 +9,9 @@ const introLines = [
 ];
 
 const projectThumbs = [
-  "https://res.cloudinary.com/dxscy1ixg/image/upload/v1750226041/project1_1_gq5w30.jpg",
+  "https://res.cloudinary.com/dxscy1ixg/image/upload/v1750758082/WhatsApp_Image_2025-06-24_at_3.10.02_PM_1_mieyqz.jpg",
   "https://res.cloudinary.com/dxscy1ixg/image/upload/v1750226041/project2_2_wlfcms.jpg",
-  "https://res.cloudinary.com/dxscy1ixg/image/upload/v1750226041/IMG_6559_ovcsko.jpg",
+  "https://res.cloudinary.com/dxscy1ixg/image/upload/v1750758081/WhatsApp_Image_2025-06-24_at_3.10.02_PM_xpvu2d.jpg",
 ];
 
 export default function LandingShowcase() {

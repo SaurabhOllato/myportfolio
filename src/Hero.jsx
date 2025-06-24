@@ -19,7 +19,7 @@ const Hero = () => {
   const { scrollY } = useScroll();
 
   const heroRef = useRef(null);
-   const fullName = "SaurabhChaurasia";
+   const fullName = "SaurabhChaurasia 👋";
   const [displayed, setDisplayed] = useState("");
 
     useEffect(() => {
@@ -64,7 +64,7 @@ const Hero = () => {
   const opacity = useTransform(scrollYProgress, [0, 0.2], [1, 0]);
 
   const handleResumeClick = () => {
-  window.open('/path-to-your-resume.pdf', '_blank');
+  window.open('https://drive.google.com/file/d/1ulOiKHqpSr95p_4PtF4r2Dy-DBSShaHr/view?usp=drive_link', '_blank');
 };
 
   return (

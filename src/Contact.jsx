@@ -165,12 +165,12 @@ export default function Contact() {
     {
       name: "GITHUB",
       icon: <FiGithub className="text-xl" />,
-      url: "https://github.com/yourusername",
+      url: "https://github.com/Saurabhc-dev",
     },
     {
       name: "LINKEDIN",
       icon: <FiLinkedin className="text-xl" />,
-      url: "https://linkedin.com/in/yourusername",
+      url: "https://www.linkedin.com/in/saurabh-chaurasia-667585371/",
     },
     // {
     //   name: "UPWORK",
@@ -261,12 +261,12 @@ export default function Contact() {
               href="mailto:oluwadareseyii@gmail.com"
               className="hover:text-[#A6A6A6] transition-colors duration-300"
             >
-              saurabhchaurasiabbf@gmail.com
+              saurabhc.dev@gmail.com
             </a>
           </h2>
-          <p className="text-gray-400 mt-4 text-center max-w-md">
+          {/* <p className="text-gray-400 mt-4 text-center max-w-md">
             Feel free to reach out or just to say hello!
-          </p>
+          </p> */}
         </motion.div>
 
         <motion.div

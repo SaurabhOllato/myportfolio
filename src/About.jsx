@@ -235,28 +235,26 @@ const About = () => {
   );
 
   const workData = [
-    {
-      year: "2022",
-      title: "Frontend Developer",
-      company: "Ollato",
-      description: "Built UI with React and Tailwind.",
-      icon: "💻",
-    },
-    {
-      year: "2023",
-      title: "Freelance Projects",
-      company: "Multiple Clients",
-      description: "Created modern websites and portfolios.",
-      icon: "🚀",
-    },
-    {
-      year: "2024",
-      title: "Intern - React Developer",
-      company: "TechX",
-      description: "Worked on reusable components and animations.",
-      icon: "⚛️",
-    },
-  ];
+  {
+    title: "Frontend Training",
+    company: "Private Classes",
+    description: "Learned HTML, CSS, JavaScript, React, and Tailwind from scratch.",
+    icon: "📚",
+  },
+  {
+    title: "Freelance Projects",
+    company: "Multiple Clients",
+    description: "Created modern websites and portfolios for clients.",
+    icon: "🚀",
+  },
+  {
+    title: "Intern - React Developer",
+    company: "Ollato",
+    description: "Working on reusable components, UI animations, and real-world projects.",
+    icon: "⚛️",
+  },
+];
+
 
   return (
     <>
@@ -286,24 +284,28 @@ const About = () => {
           >
             About Me
           </motion.h2>
-          <motion.p
-            className="text-lg md:text-xl leading-relaxed mt-4 text-[#c0c0c0] text-justify"
-            style={{
-              y: yParagraph,
-              opacitySkills,
-            scale: useTransform(smoothScroll, [0, 0.5], [0.98, 1]),
-            }}
-          transition={{ duration: 0.5, ease: "easeOut" }}
-          >
-            I'm Saurabh Chaurasia, a passionate frontend developer who enjoys
-            crafting clean and interactive user interfaces. I specialize in
-            building modern web experiences that are both functional and
-            visually appealing. I also work with React to develop dynamic,
-            component-based applications, and I'm currently expanding my skill
-            set by learning backend development. I have a working knowledge of
-            PHP and Laravel, which helps me understand full-stack workflows and
-            build more complete web solutions.
-          </motion.p>
+         <motion.div
+  style={{
+    y: yParagraph,
+    opacity: opacitySkills,
+    scale: useTransform(smoothScroll, [0, 0.5], [0.98, 1]),
+  }}
+  transition={{ duration: 0.5, ease: "easeOut" }}
+>
+  <p className="text-lg md:text-xl leading-relaxed mt-4 text-[#c0c0c0] text-justify">
+    I'm Saurabh Chaurasia, a passionate frontend developer who enjoys crafting
+    clean, responsive, and interactive user interfaces. I specialize in building
+    modern web experiences using technologies like React and Tailwind CSS to
+    create dynamic, component-based applications.
+  </p>
+  
+  <p className="text-lg md:text-xl leading-relaxed mt-4 text-[#c0c0c0] text-justify">
+    I'm currently expanding my skill set by learning backend development to
+    better understand full-stack workflows and deliver more complete web
+    solutions.
+  </p>
+</motion.div>
+
         </div>
       </section>
 

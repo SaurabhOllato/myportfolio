@@ -224,6 +224,8 @@ import {
   useSpring,
   useInView,
 } from "framer-motion";
+import { FaGithub } from "react-icons/fa";
+import { FiGithub } from "react-icons/fi";
 
 const skills = [
   {
@@ -244,38 +246,42 @@ const skills = [
   },
   {
     name: "Tailwind",
-    icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/tailwindcss/tailwindcss-plain.svg",
+    icon: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/tailwindcss/tailwindcss-original.svg",
   },
   {
     name: "Node.js",
     icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nodejs/nodejs-original.svg",
+    status: "Learning",
   },
 ];
 
 const tools = [
   {
     name: "Postman",
-    icon: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/postman/postman-original.svg",
+    icon: <i class="devicon-postman-plain text-3xl"></i>
+,
   },
   {
     name: "Framer",
-    icon: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/framermotion/framermotion-original-wordmark.svg",
+    icon: <i class="devicon-framermotion-original text-3xl"></i>,
   },
-  {
-    name: "Git",
-    icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/git/git-original.svg",
-  },
+  // {
+  //   name: "Git",
+  //   icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/git/git-original.svg",
+  // },
   {
     name: "GitHub",
-    icon: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/github/github-original-wordmark.svg",
+    icon: <i class="devicon-github-original text-3xl"></i>,
   },
   {
     name: "Vercel",
-    icon: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/vercel/vercel-original-wordmark.svg",
+    icon: <i class="devicon-vercel-original text-3xl"></i>,
   },
   {
     name: "Figma",
-    icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/figma/figma-original.svg",
+    icon: <i class="devicon-figma-plain text-3xl"></i>
+
+,
   },
 ];
 
@@ -305,18 +311,18 @@ export default function HexagonGrid() {
   });
 
   const smoothScroll = useSpring(scrollYProgress, {
-     damping: 25,   // higher = less bounce
-  stiffness: 180
+    damping: 25, // higher = less bounce
+    stiffness: 180,
   });
 
- const yHeading = useTransform(smoothScroll, [0, 0.4], [80, 0]);           // Enters earlier, less dramatic
-const ySkills = useTransform(smoothScroll, [0.2, 0.6], [150, 0]);         // Comes after heading
-const yToolsHeading = useTransform(smoothScroll, [0.4, 0.7], [120, 0]);   // Delayed tools heading
-const yToolsSkiils = useTransform(smoothScroll, [0.5, 0.9], [150, 0]);    // Last to animate in
+  const yHeading = useTransform(smoothScroll, [0, 0.4], [80, 0]); // Enters earlier, less dramatic
+  const ySkills = useTransform(smoothScroll, [0.2, 0.6], [150, 0]); // Comes after heading
+  const yToolsHeading = useTransform(smoothScroll, [0.4, 0.7], [120, 0]); // Delayed tools heading
+  const yToolsSkiils = useTransform(smoothScroll, [0.5, 0.9], [150, 0]); // Last to animate in
 
-const opacityHeading = useTransform(smoothScroll, [0.1, 0.4], [0, 1]);
-const opacitySkills = useTransform(smoothScroll, [0.2, 0.5], [0, 1]);
-const opacityTools = useTransform(smoothScroll, [0.5, 0.8], [0, 1]);
+  const opacityHeading = useTransform(smoothScroll, [0.1, 0.4], [0, 1]);
+  const opacitySkills = useTransform(smoothScroll, [0.2, 0.5], [0, 1]);
+  const opacityTools = useTransform(smoothScroll, [0.5, 0.8], [0, 1]);
 
   const scale = useTransform(smoothScroll, [0, 0.5], [0.95, 1]);
 
@@ -328,16 +334,15 @@ const opacityTools = useTransform(smoothScroll, [0.5, 0.8], [0, 1]);
           style={{ y: yHeading, opacityHeading, scale }}
           // transition={{ duration: 0.8 }}
         >
-          Tech Stack
+          Languages & Frameworks
         </motion.h2>
 
         <motion.div
           className="max-w-5xl mx-auto grid grid-cols-3 sm:grid-cols-3 md:grid-cols-4 gap-6 justify-items-center mb-16"
           style={{
             y: ySkills,
-          opacitySkills,
+            opacitySkills,
             scale: useTransform(smoothScroll, [0, 0.5], [0.98, 1]),
-            
           }}
           transition={{ duration: 0.5, ease: "easeOut" }}
         >
@@ -346,6 +351,11 @@ const opacityTools = useTransform(smoothScroll, [0.5, 0.8], [0, 1]);
               <div className="hex relative w-28 h-32 flex items-center justify-center transform transition-transform hover:rotate-3">
                 {/* <div className="absolute w-full h-full bg-indigo-500/20 blur-xl rounded-[10%] scale-110" /> */}
                 <div className="w-24 h-28 bg-[#1a1a1a] text-white cursor-pointer border border-white/10 rounded-[10%] flex flex-col items-center justify-center shadow-md hover:shadow-indigo-500/30">
+                  {skill.status && (
+                    <span className="absolute top-1 right-1 bg-yellow-500 text-black text-[10px] px-1 py-[2px] rounded">
+                      {skill.status}
+                    </span>
+                  )}
                   <img
                     src={skill.icon}
                     alt={skill.name}
@@ -363,7 +373,7 @@ const opacityTools = useTransform(smoothScroll, [0.5, 0.8], [0, 1]);
           style={{ y: yToolsHeading, opacityHeading, scale }}
           transition={{ duration: 0.8 }}
         >
-          Libraries & Frameworks
+          Tools & Platforms
         </motion.h6>
 
         <motion.div
@@ -380,11 +390,9 @@ const opacityTools = useTransform(smoothScroll, [0.5, 0.8], [0, 1]);
               <div className="hex relative w-28 h-32 flex items-center justify-center transform transition-transform hover:rotate-3">
                 {/* <div className="absolute w-full h-full bg-pink-500/20 blur-xl rounded-[10%] scale-110" /> */}
                 <div className="w-24 h-28 bg-[#1a1a1a] cursor-pointer text-white border border-white/10 rounded-[10%] flex flex-col items-center justify-center shadow-md hover:shadow-pink-500/30">
-                  <img
-                    src={tool.icon}
-                    alt={tool.name}
-                    className="w-10 h-10 mb-2"
-                  />
+                  <div className="w-10 h-10 mb-2 flex items-center justify-center">
+                    {tool.icon}
+                  </div>
                   <p className="text-sm text-center">{tool.name}</p>
                 </div>
               </div>
