@@ -64,7 +64,7 @@ const Hero = () => {
   const opacity = useTransform(scrollYProgress, [0, 0.2], [1, 0]);
 
   const handleResumeClick = () => {
-  window.open('https://drive.google.com/file/d/1ulOiKHqpSr95p_4PtF4r2Dy-DBSShaHr/view?usp=drive_link', '_blank');
+  window.open('https://drive.google.com/file/d/1b73VOxv71VftjBIkVzHj9qhVfDpPtWzr/view?usp=sharing', '_blank');
 };
 
   return (
