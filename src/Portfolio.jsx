@@ -217,7 +217,6 @@ export default function Portfolio() {
   const opacityHeading = useTransform(smoothScroll, [0.1, 0.4], [0, 1]);
 
   // const opacity = useTransform(smoothScroll, [0.2, 0.4, 0.8], [0, 1, 1]);
- 
 
   const sectionRef = useRef(null);
 
@@ -336,59 +335,74 @@ export default function Portfolio() {
 
   const projectsData = [
     {
-    id: 1,
-    title: "iTunes-Inspired Music UI",
-    subtitle: "Responsive UI design for a music platform using HTML, CSS, and Bootstrap",
-    category: "ui",
-    img: "https://res.cloudinary.com/dxscy1ixg/image/upload/v1750226041/project1_1_gq5w30.jpg",
-    tags: ["HTML", "CSS", "Bootstrap", "Responsive UI"],
-    links: {
-      live: "https://musicitune.netlify.app/",
-      
+      id: 1,
+      title: "iTunes-Inspired Music UI",
+      subtitle:
+        "Responsive UI design for a music platform using HTML, CSS, and Bootstrap",
+      category: "ui",
+      img: "https://res.cloudinary.com/dxscy1ixg/image/upload/v1750226041/project1_1_gq5w30.jpg",
+      tags: ["HTML", "CSS", "Bootstrap", "Responsive UI"],
+      links: {
+        live: "https://musicitune.netlify.app/",
+      },
     },
-  },
-  {
-    id: 2,
-    title: "Mediplus Clinic UI",
-    subtitle: "Responsive UI design for a clinic platform using HTML, CSS, and Bootstrap",
-    category: "ui",
-    img: "https://res.cloudinary.com/dxscy1ixg/image/upload/v1750226041/mediaplus_tyw2y0.jpg",
-    tags: ["HTML", "CSS", "Bootstrap", "Responsive"],
-    links: {
-      live: "https://mediplus-website.netlify.app/",
-     
+    {
+      id: 11,
+      title: "Jwellery E-commerce website",
+      subtitle:
+        "Responsive UI design for a jwellery website using React, Tailwind CSS, and Framer Motion for animations",
+      category: ["frontend", "freelance" , "ui"],
+      img: "https://res.cloudinary.com/dxscy1ixg/image/upload/v1750831531/WhatsApp_Image_2025-06-25_at_11.34.55_AM_mf6qaz.jpg",
+      tags: ["React", "Tailwind", "Responsive UI" , "Framer Motion"],
+      links: {
+        live: "https://crazzzyforfashion.vercel.app/",
+      },
     },
-  },
-  {
-    id: 3,
-    title: "Online Food Ordering UI",
-    subtitle: "Static website for online delivering using clean HTML/CSS design",
-    category: "ui",
-    img: "https://res.cloudinary.com/dxscy1ixg/image/upload/v1750226041/project2_2_wlfcms.jpg",
-    tags: ["HTML", "CSS", "Bootstrap", "Landing Page"],
-    links: {
-      live: "https://foodieperson.netlify.app/",
+     {
+      id: 8,
+      title: "Freelance Portfolio & Gift Order Site",
+      subtitle:
+        "Responsive portfolio website built using React and Tailwind CSS, integrated with Airtable to manage customized gift orders via WhatsApp.",
+      category: ["frontend", "freelance"],
+      img: "https://res.cloudinary.com/dxscy1ixg/image/upload/v1750758082/WhatsApp_Image_2025-06-24_at_3.10.02_PM_1_mieyqz.jpg",
+      tags: ["React", "tailwindcss", "Airtable", "Framer Motion"],
+      links: {
+        live: "https://suhaniscreations.vercel.app/",
+      },
+    }
+    ,
+    {
+      id: 3,
+      title: "Online Food Ordering UI",
+      subtitle:
+        "Static website for online delivering using clean HTML/CSS design",
+      category: "ui",
+      img: "https://res.cloudinary.com/dxscy1ixg/image/upload/v1750226041/project2_2_wlfcms.jpg",
+      tags: ["HTML", "CSS", "Bootstrap", "Landing Page"],
+      links: {
+        live: "https://foodieperson.netlify.app/",
+      },
     },
-  },
     {
       id: 4,
       title: "Zwigato – Food Ordering UI",
-      subtitle: "Responsive food ordering website built with React, Redux, and Tailwind CSS, featuring dynamic cart functionality",
+      subtitle:
+        "Responsive food ordering website built with React, Redux, and Tailwind CSS, featuring dynamic cart functionality",
       category: "frontend",
       img: "https://res.cloudinary.com/dxscy1ixg/image/upload/v1750757377/IMG_0257_c907nk.jpg",
       tags: ["React", "Redux", "tailwindcss"],
       links: {
         live: "https://zwigato-react-redux.netlify.app/",
-
       },
     },
     {
       id: 5,
       title: "Movie DB Project",
-      subtitle: "Interactive movie database application built with React and filtering functionality with api integration",
+      subtitle:
+        "Interactive movie database application built with React and filtering functionality with api integration",
       category: "frontend",
       img: "https://res.cloudinary.com/dxscy1ixg/image/upload/v1750758081/WhatsApp_Image_2025-06-24_at_3.10.01_PM_ebumex.jpg",
-      tags: ["React", "Api", "tailwindcss" ],
+      tags: ["React", "Api", "tailwindcss"],
       links: {
         live: "https://movie-db-project-react.netlify.app/",
       },
@@ -396,58 +410,61 @@ export default function Portfolio() {
     {
       id: 6,
       title: "Expance Tracker",
-      subtitle: "Expense tracker application built with React, and Tailwind CSS, featuring dynamic expense management",
+      subtitle:
+        "Expense tracker application built with React, and Tailwind CSS, featuring dynamic expense management",
       category: "frontend",
       img: "https://res.cloudinary.com/dxscy1ixg/image/upload/v1750226041/IMG_6559_ovcsko.jpg",
-      tags: ["React",  "tailwindcss" , "javascript"],
+      tags: ["React", "tailwindcss", "javascript"],
       links: {
         live: "https://headgearwebsite.netlify.app/",
         code: "#",
+      },
     },
-  },
     {
       id: 7,
       title: "Freelance Portfolio ",
-      subtitle: "Portfolio website built with basic html,tailwindcss, javascript and framer motion for college student. ",
-       category: ["ui", "freelance"], 
+      subtitle:
+        "Portfolio website built with basic html,tailwindcss, javascript and framer motion for college student. ",
+      category: ["ui", "freelance"],
       img: "https://res.cloudinary.com/dxscy1ixg/image/upload/v1750757379/IMG_0256_fx8jbc.jpg",
       tags: ["Html", "tailwindcss", "javascript", "Framer Motion"],
       links: {
         live: "https://amangaud.netlify.app/",
-        
       },
     },
     {
-      id: 8,
-     title: "Freelance Portfolio & Gift Order Site",
-     subtitle: "Responsive portfolio website built using React and Tailwind CSS, integrated with Airtable to manage customized gift orders via WhatsApp.",
-       category: ["frontend", "freelance"], 
-      img: "https://res.cloudinary.com/dxscy1ixg/image/upload/v1750758082/WhatsApp_Image_2025-06-24_at_3.10.02_PM_1_mieyqz.jpg",
-      tags: ["React", "tailwindcss", "Airtable" ,"Framer Motion"],
+      id: 2,
+      title: "Mediplus Clinic UI",
+      subtitle:
+        "Responsive UI design for a clinic platform using HTML, CSS, and Bootstrap",
+      category: "ui",
+      img: "https://res.cloudinary.com/dxscy1ixg/image/upload/v1750226041/mediaplus_tyw2y0.jpg",
+      tags: ["HTML", "CSS", "Bootstrap", "Responsive"],
       links: {
-        live: "https://suhaniscreations.vercel.app/",
-        
+        live: "https://mediplus-website.netlify.app/",
       },
-    },
+    }
+   ,
     {
       id: 9,
-     title: "Freelance Portfolio of a Construction Company",
-     subtitle: "Responsive portfolio website built using React and Tailwind CSS, and framer motion for animations",
-       category: ["frontend", "freelance"], 
+      title: "Freelance Portfolio of a Construction Company",
+      subtitle:
+        "Responsive portfolio website built using React and Tailwind CSS, and framer motion for animations",
+      category: ["frontend", "freelance"],
       img: "https://res.cloudinary.com/dxscy1ixg/image/upload/v1750757323/IMG_0255_aunru7.jpg",
-      tags: ["React", "tailwindcss" ,"Framer Motion"],
+      tags: ["React", "tailwindcss", "Framer Motion"],
       links: {
         live: "https://struxora.vercel.app/",
-        
       },
     },
     {
       id: 10,
-     title: "Freelance Portfolio of a Video Editor",
-     subtitle: "Portfolio website built with basic html,tailwindcss, and javascript.",
-       category: ["ui", "freelance"], 
+      title: "Freelance Portfolio of a Video Editor",
+      subtitle:
+        "Portfolio website built with basic html,tailwindcss, and javascript.",
+      category: ["ui", "freelance"],
       img: "https://res.cloudinary.com/dxscy1ixg/image/upload/v1750758081/WhatsApp_Image_2025-06-24_at_3.10.02_PM_xpvu2d.jpg",
-      tags: ["React", "tailwindcss" ,"javascript" ],
+      tags: ["React", "tailwindcss", "javascript"],
       links: {
         live: "https://vivekpersonalportfolio.vercel.app/",
       },
@@ -461,7 +478,6 @@ export default function Portfolio() {
       className="bg-[#111111] px-8  min-h-screen text-[#AAAAAA] py-10 lg:pb-20 relative "
     >
       <div className="max-w-5xl text-center  mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-
         <div className="sticky top-0 bg-[#111111] z-50 py-1">
           <Link
             to="/"
@@ -469,19 +485,13 @@ export default function Portfolio() {
           >
             ← Back to Portfolio
           </Link>
-          <motion.h2
-            className="text-4xl sm:text-5xl md:text-4xl font-bold mb-6 text-[#A6A6A6]"
-            style={{
-              y: yHeading,
-              opacity: opacityHeading,
-            }}
-          >
+          <motion.h2 className="text-4xl sm:text-5xl md:text-4xl font-bold mb-6 text-white">
             My Work
           </motion.h2>
         </div>
 
         <motion.div
-          className="max-w-5xl mx-auto flex justify-center gap-3 flex-wrap mb-16"
+          className="max-w-5xl mx-auto flex justify-center py-10 gap-3 flex-wrap "
           ref={filterButtonsRef}
           // style={{
           //   y: yCategory,

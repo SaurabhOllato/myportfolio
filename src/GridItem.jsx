@@ -39,7 +39,7 @@ export default function GridItem({ project }) {
           {project.tags.map((tag) => (
             <span
               key={tag}
-              className="text-xs font-medium px-2.5 py-1 rounded-full bg-indigo-500/10 text-indigo-600 backdrop-blur-sm"
+              className="text-xs font-medium px-2.5 py-1 rounded-full bg-indigo-100 text-indigo-800"
             >
               {tag}
             </span>
@@ -48,11 +48,11 @@ export default function GridItem({ project }) {
 
         {/* Overlay */}
         <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/60 to-transparent p-6 flex flex-col justify-end opacity-0 translate-y-6 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-500">
-          <h3 className="text-white text-xl font-bold mb-2">
+          <h3 className="text-white text:xs lg:text-xl font-bold mb-2">
             {project.title}
           </h3>
           <p className="text-gray-300 text-sm mb-4">{project.subtitle}</p>
-          <div className="flex gap-3 flex-wrap">
+          <div className="flex gap-3 flex-wrap justify-center">
             {project.links.live && (
               <a
                 href={project.links.live}
@@ -63,16 +63,16 @@ export default function GridItem({ project }) {
                 Live Demo <FiExternalLink className="text-sm" />
               </a>
             )}
-            {project.links.code && (
+            {/* {project.links.code && (
               <a
                 href={project.links.code}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-1 text-sm font-medium px-4 py-2 rounded-full bg-white/10 text-white hover:bg-white/20 transition-colors duration-300"
+                className="inline-flex items-center  text-sm font-medium px-4 py-2 rounded-full bg-white/10 text-white hover:bg-white/20 transition-colors duration-300"
               >
                 Code <FiGithub className="text-sm" />
               </a>
-            )}
+            )} */}
           </div>
         </div>
       </div>
